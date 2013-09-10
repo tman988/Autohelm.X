@@ -5,10 +5,13 @@
  *
  * Created on July 15, 2013
  *
+GNU GENERAL PUBLIC LICENSE
+                       Version 3, 29 June 2007
 
+ Copyright (C) 2007 Free Software Foundation, Inc. {http://fsf.org/}
+ Everyone is permitted to copy and distribute verbatim copies
+ of this license document, but changing it is not allowed.
  */
-
-
 
 #ifndef HALL_ENCODER_H
 #define	HALL_ENCODER_H
@@ -32,9 +35,7 @@ extern "C" {
 #define POSCNT_LTE_COMP     QEI1STATbits.PCLEQIRQ //Position Counter Less Than or Equal Compare Status bit
 
 
-#define MAX_COUNT               5
-#define POSITIVE_DIRECTION      1
-#define NEGATIVE_DIRECTION      0
+#define MAX_COUNT               1
 
 /*******************************************************************************
  * PUBLIC FUNCTION PROTOTYPES                                                  *
@@ -89,17 +90,6 @@ void ResetRevCount(void);
  */
 void SetRevCount(signed int count);
 
-/**
- * GetDirection()
- * Function: Returns the current direction of the hall sensor
- * @param: None
- * @return: Positive or Negative based on the direction of rotation
- * @remark: Returns the direction of the hall sensor not the direction of the
- *  main shaft of the Autohelm
- * @author Taylor Furtado
- * @date July 22,2013
- */
-uint8_t GetDirection(void);
 
 #ifdef	__cplusplus
 }

@@ -3,13 +3,19 @@
  * Author: mdunne
  *
  * Created on November 15, 2011, 9:53 AM
+ *
+ * GNU GENERAL PUBLIC LICENSE
+                       Version 3, 29 June 2007
+
+ Copyright (C) 2007 Free Software Foundation, Inc. {http://fsf.org/}
+ Everyone is permitted to copy and distribute verbatim copies
+ of this license document, but changing it is not allowed.
  */
 
 #include <xc.h>
 #include "timer.h"
 #include "timers.h"
-#include "General.h"
-//#include <BOARD.h>
+#include "AutohelmNode.h"
 
 /*******************************************************************************
  * PRIVATE #DEFINES                                                            *
@@ -29,7 +35,6 @@ static unsigned int Timer_Array[NUM_TIMERS];
 static unsigned int TimerActiveFlags;
 static unsigned int TimerEventFlags;
 static unsigned int FreeRunningTimer;
-
 
 /*******************************************************************************
  * PUBLIC FUNCTIONS                                                           *

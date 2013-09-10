@@ -5,6 +5,13 @@
  * Design: Autohelm Modification Project
  *
  * Created on July 15, 2013
+ *
+ * GNU GENERAL PUBLIC LICENSE
+                       Version 3, 29 June 2007
+
+ Copyright (C) 2007 Free Software Foundation, Inc. {http://fsf.org/}
+ Everyone is permitted to copy and distribute verbatim copies
+ of this license document, but changing it is not allowed.
  */
 
 #include "ADC.h"
@@ -72,20 +79,20 @@ uint16_t GetRawADC(void)
 uint16_t MapADC(void)
 {
     long unsigned int ADC;
-    
-    //map Pot range (~335 - ~715) to ADC range (0 - 1023)
-    //ADC = ((adcBuffer - POT_LOW_BOUND) * 1023.0) / (POT_HIGH_BOUND - POT_LOW_BOUND);
 
     if (adcBuffer > high)
         high = adcBuffer;
     if (adcBuffer < low)
         low = adcBuffer;
 
+    /*If pot reading exceeds calculated bounds, bring the limiting variables back within
+     limits by 10 counts*/
     if (low < POT_LOW_BOUND)
         low = POT_LOW_BOUND + 10;
     if (high > POT_HIGH_BOUND)
         high = POT_HIGH_BOUND - 10;
 
+    //map Pot range (~335 - ~715) to ADC range (0 - 1023)
     ADC = ((adcBuffer - low) * (1023.0)) / (high - low);
 
     //Set Minimum (0) and Maximum (1023)

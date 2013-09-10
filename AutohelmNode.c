@@ -2,6 +2,13 @@
  * File:   Autohelm.c
  * Author: Taylor Furtado
  *
+ * GNU GENERAL PUBLIC LICENSE
+                       Version 3, 29 June 2007
+
+ Copyright (C) 2007 Free Software Foundation, Inc. {http://fsf.org/}
+ Everyone is permitted to copy and distribute verbatim copies
+ of this license document, but changing it is not allowed.
+ *
  */
 
 #include <xc.h>
@@ -13,7 +20,6 @@
 #include "MotorControl.h"
 #include "ADC.h"
 #include "Hall Encoder.h"
-#include "General.h"
 #include <adc.h>
 #include "Uart1.h"
 #include "timers.h"
@@ -25,22 +31,18 @@
 
 #define AMBER_TRIS TRISAbits.TRISA4
 #define AMBER_LAT  LATAbits.LATA4
-
 #define SWITCH_2_TRIS   TRISBbits.TRISB12
 #define SWITCH_2        PORTBbits.RB12
 #define SWITCH_1_TRIS   TRISAbits.TRISA0
 #define SWITCH_1        PORTAbits.RA0
 
-#define LOW_DEADBAND  -50
-#define HIGH_DEADBAND 50
+#define HIGH_BOUND         32767.0 //4294967295.0
+#define LOW_BOUND          -32768.0 //-2147483648.0
+#define FULL_BOUND         65535.0
 
-#define MAX_ANGLE       120.0
-#define FULL_32         1000000.0 //4294967295.0
-#define LOW_32          500000 //-2147483648.0
 #define Kp              150.0
 #define Kd              1.0
 #define Ki              0.5
-#define INTEGRAL_WINDUP 4096
 #define tCurrent        0
 #define tMinus1         1
 #define tMinus2         2
@@ -63,7 +65,7 @@ _FWDT(FWDTEN_OFF);
 _FICD(JTAGEN_OFF & ICS_PGD3);
 
 /*******************************************************************************
- * PRIVATE Variables                                                            *
+ * PRIVATE Structs/Unions/Enums                                                            *
  ******************************************************************************/
 
 union errors{
@@ -73,16 +75,27 @@ union errors{
 };
 union errors errorType;
 
-//static uint16_t lastData, currentData, filterData;
+//States for Calibrate State Machine
+typedef enum {
+    minimum, maximum, middle, calibrated
+} CalibrateStates_t;
+//States for High Level State Machine
+typedef enum {
+    calibrating, inAuto, inManual
+} AutohelmStates_t;
+
 static CalibrateStates_t CalibrateState = minimum;
 static AutohelmStates_t AutohelmState;
+
+/*******************************************************************************
+ * PRIVATE Variables                                                            *
+ ******************************************************************************/
+
 static signed int minRev, midRev, maxRev;
-static int32_t minTick, maxTick;
 /*PID Variables*/
 static int32_t targetTick, currentTick;
 static int32_t PID, error, proportion, derivative, integral;
 static int32_t inPID[3] = {0,0,0};
-static float degreePerRev, tickPerDegree, tickPerRev;
 
 /*******************************************************************************
  * Private Function Prototypes
@@ -155,55 +168,40 @@ int32_t PID_Control(int32_t target, int32_t current);
  ******************************************************************************/
 int main(void)
 {
+
     AutohelmInit();
 
     InitTimer(UPDATE_TIMER,UPDATE_TIME);
     InitTimer(PID_TIMER, PID_TIME);
-
     while (!errorType.main) {
         if(IsTimerExpired(UPDATE_TIMER)) {
             PrintUpdate();
             InitTimer(UPDATE_TIMER, UPDATE_TIME);            
         }
-        
         switch (AutohelmState) {
             case calibrating:
                 ClutchControl(CLUTCH_ENGAGED);
                 if(Calibrate() == calibrated){
-                    /*Calculate conversion constants*/
-//                    degreePerRev = MAX_ANGLE / (float)maxRev;
-//                    tickPerDegree = FULL_32 / 360.0;
-//                    tickPerRev = degreePerRev * tickPerDegree;
-//                    /*Map Revs to Ticks*/
-//                    minTick = minRev * tickPerRev;
-//                    maxTick = maxRev * tickPerRev;
-                    /*Initial target is the center*/
-                    targetTick = 0;
-
                     AutohelmState = inAuto;
                 }
                 break; //end calibrating
             case inAuto:
                 ClutchControl(CLUTCH_ENGAGED);
-                /*Limit larget to the bounds established in Calibrate.
-                 If the bounds are exceeded move the target down to 1% below max
-                 or 1% above min, also raise an overBound or underBound Error.*/
-//                if(targetTick > maxTick) {
-//                    targetTick = targetTick - (maxTick * 0.01);
-//                    errorType.overBound = 1;
-//                } else if (targetTick < minTick) {
-//                    targetTick = targetTick + (minTick * 0.01);
-//                    errorType.underBound = 1;
-//                } else {
-//                    errorType.overBound = 0;
-//                    errorType.underBound = 0;
-//                }
-                /*Convert revCount to Ticks and use GetRevCount() as currentTick
-                 currentTick will come from the controller*/
-//                currentTick = (int32_t)GetRevCount() * tickPerRev;
-                targetTick = ((GetMappedADC() * (float)(maxRev - minRev)) / 1023) + (minRev);
-                SetTargetPWM((signed int)PID_Control(targetTick, GetRevCount()));
+                /*Map current value to the same range as the input (16-bits)*/
+                currentTick = ((GetRevCount()- minRev) * (HIGH_BOUND - LOW_BOUND)) / (maxRev - minRev) + (LOW_BOUND);
 
+                /*Limit target values to their appropriate bounds (signed 16-bit int)*/
+                targetTick = ((GetMappedADC() * (FULL_BOUND)) / 1023) + (LOW_BOUND);
+                /*Verify valid target values*/
+                if (targetTick > HIGH_BOUND) {
+                    errorType.overBound = 1;
+                } else if (targetTick < LOW_BOUND) {
+                    errorType.underBound = 1;
+                } else {
+                    SetTargetPWM((signed int)PID_Control(targetTick, currentTick));
+                    errorType.overBound = 0;
+                    errorType.underBound = 0;
+                }
 
                 break; //end inAuto
             case inManual:
@@ -215,28 +213,13 @@ int main(void)
                 errorType.main = 1;
                 break;// end default
         }
-
-
-        
-
-//        targetTick = ((GetMappedADC() * 200.0) / 1023) + (0);
-//
-////        if (SWITCH_1)
-////            targetTick = 0;
-////        else
-////            targetTick = 5;
-////        ClutchControl(CLUTCH_ENGAGED);
-//        if(IsTimerExpired(PID_TIMER)) {
-//            SetTargetPWM((signed int)PID_Control(targetTick, (int32_t)GetRevCount()));
-//            InitTimer(PID_TIMER, PID_TIME);
-//        }
-
     }
 
     printf("[MAIN]error: exit loop\n");
     while(errorType.main){
         SetTargetPWM(STOP);
     }
+    return 0;
 }
 
 /*******************************************************************************
@@ -306,11 +289,10 @@ uint8_t Calibrate() {
             if (!SWITCH_2) {
                 CalibrateState = middle;
                 maxRev = GetRevCount();
+                midRev = (maxRev + minRev) >> 1;
             }
             break; //end maximum
         case middle:
-            midRev = (maxRev + minRev) >> 1;
-
             if (GetRevCount() > midRev)
                 SetTargetPWM(FULL_NEGATIVE);
             else if (GetRevCount() < midRev)
@@ -319,7 +301,6 @@ uint8_t Calibrate() {
                 SetTargetPWM(STOP);
                 CalibrateState = calibrated;
             }
-
             break; //end middle
         case calibrated:
             SetTargetPWM(STOP);

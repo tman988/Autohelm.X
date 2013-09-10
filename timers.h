@@ -11,6 +11,13 @@
  * Make sure it is commented out for module useage.
  *
  * Created on November 15, 2011, 9:54 AM
+ *
+ * GNU GENERAL PUBLIC LICENSE
+                       Version 3, 29 June 2007
+
+ Copyright (C) 2007 Free Software Foundation, Inc. {http://fsf.org/}
+ Everyone is permitted to copy and distribute verbatim copies
+ of this license document, but changing it is not allowed.
  */
 
 /*******************************************************************************
@@ -18,8 +25,6 @@
  ******************************************************************************/
 #ifndef timers_H
 #define timers_H
-
-
 
 #define TIMER_ACTIVE 1
 #define TIMER_EXPIRED 1

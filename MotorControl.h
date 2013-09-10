@@ -5,24 +5,12 @@
  *
  * Created on June 28, 2013
 
-Copyright (c) [2013] [Taylor E. Furtado]
+GNU GENERAL PUBLIC LICENSE
+                       Version 3, 29 June 2007
 
-Permission is hereby granted, free of charge, to any person obtaining a copy of
-this software and associated documentation files (the "Software"), to deal in
-the Software without restriction, including without limitation the rights to
-use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
-the Software, and to permit persons to whom the Software is furnished to do so,
-subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
-FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
-COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
-IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
-CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ Copyright (C) 2007 Free Software Foundation, Inc. {http://fsf.org/}
+ Everyone is permitted to copy and distribute verbatim copies
+ of this license document, but changing it is not allowed.
  */
 
 #ifndef MOTORCONTROL_H
@@ -50,7 +38,6 @@ extern "C" {
     
 #define CLUTCH_ENGAGED            1
 #define CLUTCH_DISENGAGED         0
-#define CLUTCH_UNKNOWN            -1
 
 #define CHANGE_RATE       10
 
@@ -99,25 +86,7 @@ void SetTargetPWM(signed int target);
  * @author Taylor Furtado
  * @date July 1, 2013
 */
-
-void SetCurrentPWM(signed int PWM);
-
 void ClutchControl(uint8_t control);
-
-/**
- * IsClutchEngaged()
- * Function: Determines if the physical clutch is engaged or disengaged.
- * @param: None
- * @return: CLUTCH_ENGAGED, if the physical clutch is engaged
- *          CLUTCH_DISENGAGED, if the physical clutch is NOT engaged
- *          CLUTCH_UNKNOWN, the status of the clutch cannot be determined
- * @remark: Returns status of the physical clutch. Based on the movement of the
- * Autohelm potentiometer when the motor is running. If the motor is not running
- * when IsClutchEngaged, the function will return CLUTCH_UNKNOWN.
- * @author Taylor Furtado
- * @date July 17,2013
-*/
-uint8_t IsClutchEngaged(void);
 
 /**
  * GetCurrentPWM()

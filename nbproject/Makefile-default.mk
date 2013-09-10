@@ -45,11 +45,11 @@ OBJECTDIR=build/${CND_CONF}/${IMAGE_TYPE}
 DISTDIR=dist/${CND_CONF}/${IMAGE_TYPE}
 
 # Object Files Quoted if spaced
-OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/_ext/1846003557/ADC.o ${OBJECTDIR}/_ext/1846003557/AutohelmNode.o ${OBJECTDIR}/_ext/1846003557/CircularBuffer.o "${OBJECTDIR}/_ext/1846003557/Hall Encoder.o" ${OBJECTDIR}/_ext/1846003557/MotorControl.o ${OBJECTDIR}/_ext/1846003557/timers.o ${OBJECTDIR}/_ext/1846003557/Uart1.o
-POSSIBLE_DEPFILES=${OBJECTDIR}/_ext/1846003557/ADC.o.d ${OBJECTDIR}/_ext/1846003557/AutohelmNode.o.d ${OBJECTDIR}/_ext/1846003557/CircularBuffer.o.d "${OBJECTDIR}/_ext/1846003557/Hall Encoder.o.d" ${OBJECTDIR}/_ext/1846003557/MotorControl.o.d ${OBJECTDIR}/_ext/1846003557/timers.o.d ${OBJECTDIR}/_ext/1846003557/Uart1.o.d
+OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/_ext/1846003557/ADC.o ${OBJECTDIR}/_ext/1846003557/AutohelmNode.o "${OBJECTDIR}/_ext/1846003557/Hall Encoder.o" ${OBJECTDIR}/_ext/1846003557/MotorControl.o ${OBJECTDIR}/_ext/1846003557/timers.o ${OBJECTDIR}/_ext/1846003557/Uart1.o ${OBJECTDIR}/_ext/1846003557/CircularBuffer.o
+POSSIBLE_DEPFILES=${OBJECTDIR}/_ext/1846003557/ADC.o.d ${OBJECTDIR}/_ext/1846003557/AutohelmNode.o.d "${OBJECTDIR}/_ext/1846003557/Hall Encoder.o.d" ${OBJECTDIR}/_ext/1846003557/MotorControl.o.d ${OBJECTDIR}/_ext/1846003557/timers.o.d ${OBJECTDIR}/_ext/1846003557/Uart1.o.d ${OBJECTDIR}/_ext/1846003557/CircularBuffer.o.d
 
 # Object Files
-OBJECTFILES=${OBJECTDIR}/_ext/1846003557/ADC.o ${OBJECTDIR}/_ext/1846003557/AutohelmNode.o ${OBJECTDIR}/_ext/1846003557/CircularBuffer.o ${OBJECTDIR}/_ext/1846003557/Hall\ Encoder.o ${OBJECTDIR}/_ext/1846003557/MotorControl.o ${OBJECTDIR}/_ext/1846003557/timers.o ${OBJECTDIR}/_ext/1846003557/Uart1.o
+OBJECTFILES=${OBJECTDIR}/_ext/1846003557/ADC.o ${OBJECTDIR}/_ext/1846003557/AutohelmNode.o ${OBJECTDIR}/_ext/1846003557/Hall\ Encoder.o ${OBJECTDIR}/_ext/1846003557/MotorControl.o ${OBJECTDIR}/_ext/1846003557/timers.o ${OBJECTDIR}/_ext/1846003557/Uart1.o ${OBJECTDIR}/_ext/1846003557/CircularBuffer.o
 
 
 CFLAGS=
@@ -85,12 +85,6 @@ ${OBJECTDIR}/_ext/1846003557/AutohelmNode.o: C:/Users/tfurtado/Dropbox/Autohelm/
 	${MP_CC} $(MP_EXTRA_CC_PRE)  C:/Users/tfurtado/Dropbox/Autohelm/Software/Autohelm.X/AutohelmNode.c  -o ${OBJECTDIR}/_ext/1846003557/AutohelmNode.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/_ext/1846003557/AutohelmNode.o.d"        -g -D__DEBUG -D__MPLAB_DEBUGGER_PK3=1  -omf=elf -O0 -msmart-io=1 -Wall -msfr-warn=off
 	@${FIXDEPS} "${OBJECTDIR}/_ext/1846003557/AutohelmNode.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
 	
-${OBJECTDIR}/_ext/1846003557/CircularBuffer.o: C:/Users/tfurtado/Dropbox/Autohelm/Software/Autohelm.X/CircularBuffer.c  nbproject/Makefile-${CND_CONF}.mk
-	@${MKDIR} ${OBJECTDIR}/_ext/1846003557 
-	@${RM} ${OBJECTDIR}/_ext/1846003557/CircularBuffer.o.d 
-	${MP_CC} $(MP_EXTRA_CC_PRE)  C:/Users/tfurtado/Dropbox/Autohelm/Software/Autohelm.X/CircularBuffer.c  -o ${OBJECTDIR}/_ext/1846003557/CircularBuffer.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/_ext/1846003557/CircularBuffer.o.d"        -g -D__DEBUG -D__MPLAB_DEBUGGER_PK3=1  -omf=elf -O0 -msmart-io=1 -Wall -msfr-warn=off
-	@${FIXDEPS} "${OBJECTDIR}/_ext/1846003557/CircularBuffer.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
-	
 ${OBJECTDIR}/_ext/1846003557/Hall\ Encoder.o: C:/Users/tfurtado/Dropbox/Autohelm/Software/Autohelm.X/Hall\ Encoder.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} ${OBJECTDIR}/_ext/1846003557 
 	@${RM} ${OBJECTDIR}/_ext/1846003557/Hall\ Encoder.o.d 
@@ -115,6 +109,12 @@ ${OBJECTDIR}/_ext/1846003557/Uart1.o: C:/Users/tfurtado/Dropbox/Autohelm/Softwar
 	${MP_CC} $(MP_EXTRA_CC_PRE)  C:/Users/tfurtado/Dropbox/Autohelm/Software/Autohelm.X/Uart1.c  -o ${OBJECTDIR}/_ext/1846003557/Uart1.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/_ext/1846003557/Uart1.o.d"        -g -D__DEBUG -D__MPLAB_DEBUGGER_PK3=1  -omf=elf -O0 -msmart-io=1 -Wall -msfr-warn=off
 	@${FIXDEPS} "${OBJECTDIR}/_ext/1846003557/Uart1.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
 	
+${OBJECTDIR}/_ext/1846003557/CircularBuffer.o: C:/Users/tfurtado/Dropbox/Autohelm/Software/Autohelm.X/CircularBuffer.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} ${OBJECTDIR}/_ext/1846003557 
+	@${RM} ${OBJECTDIR}/_ext/1846003557/CircularBuffer.o.d 
+	${MP_CC} $(MP_EXTRA_CC_PRE)  C:/Users/tfurtado/Dropbox/Autohelm/Software/Autohelm.X/CircularBuffer.c  -o ${OBJECTDIR}/_ext/1846003557/CircularBuffer.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/_ext/1846003557/CircularBuffer.o.d"        -g -D__DEBUG -D__MPLAB_DEBUGGER_PK3=1  -omf=elf -O0 -msmart-io=1 -Wall -msfr-warn=off
+	@${FIXDEPS} "${OBJECTDIR}/_ext/1846003557/CircularBuffer.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
+	
 else
 ${OBJECTDIR}/_ext/1846003557/ADC.o: C:/Users/tfurtado/Dropbox/Autohelm/Software/Autohelm.X/ADC.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} ${OBJECTDIR}/_ext/1846003557 
@@ -127,12 +127,6 @@ ${OBJECTDIR}/_ext/1846003557/AutohelmNode.o: C:/Users/tfurtado/Dropbox/Autohelm/
 	@${RM} ${OBJECTDIR}/_ext/1846003557/AutohelmNode.o.d 
 	${MP_CC} $(MP_EXTRA_CC_PRE)  C:/Users/tfurtado/Dropbox/Autohelm/Software/Autohelm.X/AutohelmNode.c  -o ${OBJECTDIR}/_ext/1846003557/AutohelmNode.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/_ext/1846003557/AutohelmNode.o.d"        -g -omf=elf -O0 -msmart-io=1 -Wall -msfr-warn=off
 	@${FIXDEPS} "${OBJECTDIR}/_ext/1846003557/AutohelmNode.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
-	
-${OBJECTDIR}/_ext/1846003557/CircularBuffer.o: C:/Users/tfurtado/Dropbox/Autohelm/Software/Autohelm.X/CircularBuffer.c  nbproject/Makefile-${CND_CONF}.mk
-	@${MKDIR} ${OBJECTDIR}/_ext/1846003557 
-	@${RM} ${OBJECTDIR}/_ext/1846003557/CircularBuffer.o.d 
-	${MP_CC} $(MP_EXTRA_CC_PRE)  C:/Users/tfurtado/Dropbox/Autohelm/Software/Autohelm.X/CircularBuffer.c  -o ${OBJECTDIR}/_ext/1846003557/CircularBuffer.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/_ext/1846003557/CircularBuffer.o.d"        -g -omf=elf -O0 -msmart-io=1 -Wall -msfr-warn=off
-	@${FIXDEPS} "${OBJECTDIR}/_ext/1846003557/CircularBuffer.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
 	
 ${OBJECTDIR}/_ext/1846003557/Hall\ Encoder.o: C:/Users/tfurtado/Dropbox/Autohelm/Software/Autohelm.X/Hall\ Encoder.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} ${OBJECTDIR}/_ext/1846003557 
@@ -157,6 +151,12 @@ ${OBJECTDIR}/_ext/1846003557/Uart1.o: C:/Users/tfurtado/Dropbox/Autohelm/Softwar
 	@${RM} ${OBJECTDIR}/_ext/1846003557/Uart1.o.d 
 	${MP_CC} $(MP_EXTRA_CC_PRE)  C:/Users/tfurtado/Dropbox/Autohelm/Software/Autohelm.X/Uart1.c  -o ${OBJECTDIR}/_ext/1846003557/Uart1.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/_ext/1846003557/Uart1.o.d"        -g -omf=elf -O0 -msmart-io=1 -Wall -msfr-warn=off
 	@${FIXDEPS} "${OBJECTDIR}/_ext/1846003557/Uart1.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
+	
+${OBJECTDIR}/_ext/1846003557/CircularBuffer.o: C:/Users/tfurtado/Dropbox/Autohelm/Software/Autohelm.X/CircularBuffer.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} ${OBJECTDIR}/_ext/1846003557 
+	@${RM} ${OBJECTDIR}/_ext/1846003557/CircularBuffer.o.d 
+	${MP_CC} $(MP_EXTRA_CC_PRE)  C:/Users/tfurtado/Dropbox/Autohelm/Software/Autohelm.X/CircularBuffer.c  -o ${OBJECTDIR}/_ext/1846003557/CircularBuffer.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/_ext/1846003557/CircularBuffer.o.d"        -g -omf=elf -O0 -msmart-io=1 -Wall -msfr-warn=off
+	@${FIXDEPS} "${OBJECTDIR}/_ext/1846003557/CircularBuffer.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
 	
 endif
 

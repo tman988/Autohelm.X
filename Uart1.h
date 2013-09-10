@@ -1,9 +1,18 @@
 /* 
- * File:   Uart1.h
- * Author: tfurtado
+ * @file   Uart1.c
+ * @author Bryant Mairs
  *
- * Created on July 25, 2013, 2:28 PM
+ * GNU GENERAL PUBLIC LICENSE
+                       Version 3, 29 June 2007
+
+ Copyright (C) 2007 Free Software Foundation, Inc. {http://fsf.org/}
+ Everyone is permitted to copy and distribute verbatim copies
+ of this license document, but changing it is not allowed.
  */
+// USAGE:
+// Add Uart1Init() to an initialization sequence called once on startup.
+// Use Uart1Write*Data() to push appropriately-sized data chunks into the queue and begin transmission.
+// Use Uart1ReadByte() to read bytes out of the buffer
 
 #ifndef UART1_H
 #define	UART1_H

@@ -4,6 +4,13 @@
  * Design: Autohelm Modification Project
  *
  * Created on June 28, 2013
+ *
+ * GNU GENERAL PUBLIC LICENSE
+                       Version 3, 29 June 2007
+
+ Copyright (C) 2007 Free Software Foundation, Inc. {http://fsf.org/}
+ Everyone is permitted to copy and distribute verbatim copies
+ of this license document, but changing it is not allowed.
  */
 
 #include "MotorControl.h"
@@ -28,8 +35,6 @@
 
 static signed int targetPWM, currentPWM;
 static uint8_t direction, clutchControl;
-static uint8_t clutchFlag = 0;
-static uint16_t lastPotReading, currentPotReading;
 
 /*******************************************************************************
  * Private Function Prototypes
@@ -60,11 +65,9 @@ void UpdatePWM(void);
 void MotorControlInit(void)
 {
     /*Timer Initialization*/
-
     Timer1Init(1 * millisecond);
 
     /*Pin Setup*/
-
     CLUTCH_TRIS = 0;
     directionPIN_TRIS = 0;
 
@@ -101,16 +104,6 @@ void SetTargetPWM(signed int target)
         
 }
 
-void SetCurrentPWM(signed int PWM)
-{
-    if(PWM > FULL_POSITIVE)
-        PWM = FULL_POSITIVE;
-    if(PWM < FULL_NEGATIVE)
-        PWM = FULL_NEGATIVE;
-
-    SetHSPWMDutyCycle1(PWM);
-}
-
 void ClutchControl (uint8_t control)
 {
     clutchControl = control;
@@ -120,31 +113,6 @@ void ClutchControl (uint8_t control)
         CLUTCH_LAT = CLUTCH_DISENGAGED;
     } else {
         ;
-    }
-
-}
-
-uint8_t IsClutchEngaged(void)
-{
-    //Check if Clutch is set to be engaged.
-    if (clutchControl == CLUTCH_DISENGAGED)
-        return CLUTCH_DISENGAGED;
-
-    //Clutch canot be determined if the motor is not moving
-    if (GetCurrentPWM() == STOP || GetTargetPWM() == STOP)
-        return CLUTCH_UNKNOWN;
-
-    if (clutchFlag == 0){
-        lastPotReading = currentPotReading;
-        clutchFlag = 1;
-        IsClutchEngaged();
-    } else if (clutchFlag == 1) {
-        clutchFlag = 0;
-        if ((lastPotReading - currentPotReading) > 800) {
-            return CLUTCH_ENGAGED;
-        } else {
-            return CLUTCH_DISENGAGED;
-        }
     }
 }
 
@@ -198,10 +166,10 @@ void UpdatePWM (void)
         currentPWM -= CHANGE_RATE;
         SetHSPWMDutyCycle1(tempCurrent);
     } 
-
 }
 
-void __attribute__((interrupt, no_auto_psv)) _T1Interrupt( void ) {
+void __attribute__((interrupt, no_auto_psv)) _T1Interrupt( void )
+{
 
     UpdatePWM();
     IFS0bits.T1IF = 0;          //Reset interrupt flag

@@ -6,11 +6,11 @@
                    projectFiles="true">
       <itemPath>C:/Users/tfurtado/Dropbox/Autohelm/Software/Autohelm.X/ADC.h</itemPath>
       <itemPath>C:/Users/tfurtado/Dropbox/Autohelm/Software/Autohelm.X/AutohelmNode.h</itemPath>
-      <itemPath>C:/Users/tfurtado/Dropbox/Autohelm/Software/Autohelm.X/General.h</itemPath>
       <itemPath>C:/Users/tfurtado/Dropbox/Autohelm/Software/Autohelm.X/Hall Encoder.h</itemPath>
       <itemPath>C:/Users/tfurtado/Dropbox/Autohelm/Software/Autohelm.X/MotorControl.h</itemPath>
       <itemPath>C:/Users/tfurtado/Dropbox/Autohelm/Software/Autohelm.X/timers.h</itemPath>
       <itemPath>C:/Users/tfurtado/Dropbox/Autohelm/Software/Autohelm.X/Uart1.h</itemPath>
+      <itemPath>C:/Users/tfurtado/Dropbox/Autohelm/Software/Autohelm.X/CircularBuffer.h</itemPath>
     </logicalFolder>
     <logicalFolder name="LinkerScript"
                    displayName="Linker Files"
@@ -21,11 +21,11 @@
                    projectFiles="true">
       <itemPath>C:/Users/tfurtado/Dropbox/Autohelm/Software/Autohelm.X/ADC.c</itemPath>
       <itemPath>C:/Users/tfurtado/Dropbox/Autohelm/Software/Autohelm.X/AutohelmNode.c</itemPath>
-      <itemPath>C:/Users/tfurtado/Dropbox/Autohelm/Software/Autohelm.X/CircularBuffer.c</itemPath>
       <itemPath>C:/Users/tfurtado/Dropbox/Autohelm/Software/Autohelm.X/Hall Encoder.c</itemPath>
       <itemPath>C:/Users/tfurtado/Dropbox/Autohelm/Software/Autohelm.X/MotorControl.c</itemPath>
       <itemPath>C:/Users/tfurtado/Dropbox/Autohelm/Software/Autohelm.X/timers.c</itemPath>
       <itemPath>C:/Users/tfurtado/Dropbox/Autohelm/Software/Autohelm.X/Uart1.c</itemPath>
+      <itemPath>C:/Users/tfurtado/Dropbox/Autohelm/Software/Autohelm.X/CircularBuffer.c</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"

@@ -5,6 +5,13 @@
  * Design: Autohelm Modification Project
  *
  * Created on July 19, 2013
+ *
+ * GNU GENERAL PUBLIC LICENSE
+                       Version 3, 29 June 2007
+
+ Copyright (C) 2007 Free Software Foundation, Inc. {http://fsf.org/}
+ Everyone is permitted to copy and distribute verbatim copies
+ of this license document, but changing it is not allowed.
  */
 
 #include "Hall Encoder.h"
@@ -47,7 +54,6 @@ static signed int revCount;
 /*******************************************************************************
  * PRIVATE FUNCTION Prototypes
  ******************************************************************************/
-
 
 
 /*******************************************************************************
@@ -94,7 +100,7 @@ void QEI_Init(void)
 
     //Greater than or equal compare to POSCNT (COMP = 2n, where n == # of changes of one channel)
     GTE_COMP_H_REG = 0;             //Upper 16 bits
-    GTE_COMP_L_REG = 1;            //Lower 16 bits
+    GTE_COMP_L_REG = MAX_COUNT;            //Lower 16 bits
 
     LTE_COMP_H_REG = 0;             //Low Bound == 0
     LTE_COMP_L_REG = 0;
@@ -120,11 +126,6 @@ void SetRevCount(signed int count)
     revCount = count;
 }
 
-uint8_t GetDirection(void)
-{
-//    return DIRECTION;
-}
-
 /*******************************************************************************
  * PRIVATE FUNCTION DEFFINITIONS                                                          *
  ******************************************************************************/
@@ -139,6 +140,6 @@ void __attribute__((interrupt, auto_psv)) _QEI1Interrupt(void)
         revCount--;
         POSCNT_LTE_COMP = 0;
     }
-//    printf("RevCount:%d\n", GetRevCount());
+
     IFS3bits.QEI1IF = 0;
 }
