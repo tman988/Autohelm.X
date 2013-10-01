@@ -113,7 +113,7 @@ void Uart1StartTransmission(void)
 {
 	while (uart1TxBuffer.dataSize > 0 && !U1STAbits.UTXBF) {
         // A temporary variable is used here because writing directly into U1TXREG causes some weird issues.
-        uint8_t c;
+        static uint8_t c;
         CB_ReadByte(&uart1TxBuffer, &c);
         U1TXREG = c;
     }

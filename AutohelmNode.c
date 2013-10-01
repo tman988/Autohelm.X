@@ -24,6 +24,8 @@
 #include "Uart1.h"
 #include "timers.h"
 #include <qei32.h>
+#include "Ecan1.h"
+#include "Node.h"
 
 /*******************************************************************************
  * PRIVATE #DEFINES                                                            *
@@ -59,7 +61,7 @@
 #ifdef _FSS       /* for chip with memory protection options */
 _FSS(RSS_NO_RAM & SSS_NO_FLASH & SWRP_WRPROTECT_OFF)
 #endif
-_FOSCSEL(FNOSC_FRC & PWMLOCK_OFF);
+_FOSCSEL(FNOSC_FRC);
 _FOSC(FCKSM_CSECMD & OSCIOFNC_OFF & POSCMD_XT);
 _FWDT(FWDTEN_OFF);
 _FICD(JTAGEN_OFF & ICS_PGD3);
@@ -96,6 +98,7 @@ static signed int minRev, midRev, maxRev;
 static int32_t targetTick, currentTick;
 static int32_t PID, error, proportion, derivative, integral;
 static int32_t inPID[3] = {0,0,0};
+CanMessage message;
 
 /*******************************************************************************
  * Private Function Prototypes
@@ -166,17 +169,20 @@ int32_t PID_Control(int32_t target, int32_t current);
 /*******************************************************************************
  * Autohelm Main()                                                          *
  ******************************************************************************/
+
 int main(void)
 {
 
     AutohelmInit();
-
+    NodeTransmitStatus();
     InitTimer(UPDATE_TIMER,UPDATE_TIME);
     InitTimer(PID_TIMER, PID_TIME);
+
+
     while (!errorType.main) {
         if(IsTimerExpired(UPDATE_TIMER)) {
             PrintUpdate();
-            InitTimer(UPDATE_TIMER, UPDATE_TIME);            
+            InitTimer(UPDATE_TIMER, UPDATE_TIME);
         }
         switch (AutohelmState) {
             case calibrating:
@@ -237,9 +243,16 @@ void AutohelmInit()
     MotorControlInit();
 //    Timer2Init(200 * MILLISECOND); // (n * 80), Use for printing
     ADCInit();
-    Uart1Init(21);
+//    Uart1Init(21);
     QEI_Init();
     TIMERS_Init();
+    PPSUnLock;
+        RPINR26bits.C1RXR = 36;
+        RPOR2bits.RP39R = 0b001110;
+    PPSLock;
+    TRISBbits.TRISB7 = 0;
+    TRISBbits.TRISB4 = 1;
+    Ecan1Init();
 
     ResetRevCount();
     AutohelmState = calibrating;
@@ -334,12 +347,15 @@ int32_t PID_Control(int32_t target, int32_t current)
 }
 
 void PrintUpdate() {
+//    printf("PRE\n");
+//    NodeTransmitStatus();
+//    printf("POST\n");
 //    printf("ERR:%d\n", errorType);
-    printf("AUT: %d\n", AutohelmState);
-    printf("CAL: %d\n", CalibrateState);
+//    printf("AUT: %d\n", AutohelmState);
+//    printf("CAL: %d\n", CalibrateState);
 //    printf("ADC: %d\n", GetMappedADC());
-    printf("TAR: %ld\n", targetTick);
-    printf("CUR: %ld\n", currentTick);
+//    printf("TAR: %ld\n", targetTick);
+//    printf("CUR: %ld\n", currentTick);
 //    printf("PID: %ld\n", PID_Control(targetTick, (int32_t)GetRevCount()));
 //    printf("CUR: %ld\n", currentIn);
 //    printf("ERR: %ld\n", error);
@@ -347,7 +363,7 @@ void PrintUpdate() {
 //    printf("DER: %ld\n", derivative);
 //    printf("INT: %ld\n", integral);
 //    printf("PWM: %d\n", GetCurrentPWM());
-    printf("REV: %ld\n", (int32_t)GetRevCount());
+//    printf("REV: %ld\n", (int32_t)GetRevCount());
 //    printf("TPD: %3.2f\n", tickPerDegree);
 //    printf("DPR: %3.2f\n", degreePerRev);
 //    printf("TPR: %3.2f\n", tickPerRev);
